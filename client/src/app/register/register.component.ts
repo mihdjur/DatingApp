@@ -1,30 +1,49 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
 import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  
   @Output() cancelRegister = new EventEmitter();
-  model:any = {};
+  model: any = {};
 
-  constructor(private accountService : AccountService) { }
+  constructor(
+    private accountService: AccountService,
+    private toastr: ToastrService
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
+
   register() {
-   this.accountService.register(this.model).subscribe(response => {
-    console.log(response);
-    this.cancel();
-   }, error => {
-    console.log(error);
-   }) 
+    const that = this;
+
+    this.accountService
+      .register(this.model)
+      .pipe(
+        finalize(() => {
+          this.cancel();
+        })
+      )
+      .subscribe({
+        next(value) {
+          console.log(value);
+        },
+        error(err) {
+          if (typeof err.error == 'string') {
+            that.toastr.error(err.error);
+          } else {
+            that.toastr.error(JSON.stringify(err.error.errors));
+          }
+        },
+      });
   }
+
   cancel() {
     this.cancelRegister.emit(false);
-
   }
 }
