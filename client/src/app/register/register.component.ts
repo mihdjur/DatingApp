@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { finalize } from 'rxjs';
+import { Subject } from 'rxjs';
+import { EventEmitter } from 'stream';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -9,7 +11,7 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  @Output() cancelRegister = new EventEmitter();
+  @Output() cancelRegister = new Subject<boolean>();
   model: any = {};
 
   constructor(
@@ -19,31 +21,25 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  register() {
-    const that = this;
+  register(form: NgForm) {
+    const value = form.value;
+    this.model.username = value.username;
+    this.model.password = value.password;
 
-    this.accountService
-      .register(this.model)
-      .pipe(
-        finalize(() => {
-          this.cancel();
-        })
-      )
-      .subscribe({
-        next(value) {
-          console.log(value);
-        },
-        error(err) {
-          if (typeof err.error == 'string') {
-            that.toastr.error(err.error);
-          } else {
-            that.toastr.error(JSON.stringify(err.error.errors));
-          }
-        },
-      });
+    this.accountService.register(this.model).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+        this.toastr.error(error.error);
+      }
+    );
+
+    this.cancel();
   }
 
   cancel() {
-    this.cancelRegister.emit(false);
+    this.cancelRegister.next(false);
   }
 }
