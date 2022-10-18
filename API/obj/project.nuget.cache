@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "0fcNivOA9N8KPHyO+R2LZ5oJFNKLH5RKsG6utPc63lm3rl3PRd/QQswB025nZuNUnBjjBbyS43KK0PXZCIXq8Q==",
+  "dgSpecHash": "QUWxzZr6u2VSklqsAgT3ciY0cnOH8iCM+7ibI/ZMHDUgkL+bntXytHZOvS6EbcSrjEW/JloDBricZ/SnAO10yA==",
   "success": true,
   "projectFilePath": "/home/kodit-pc-1/Praksa/DatingApp/API/API.csproj",
   "expectedPackageFiles": [
+    "/home/kodit-pc-1/.nuget/packages/automapper/12.0.0/automapper.12.0.0.nupkg.sha512",
+    "/home/kodit-pc-1/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.0/automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "/home/kodit-pc-1/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/home/kodit-pc-1/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.10/microsoft.aspnetcore.authentication.jwtbearer.6.0.10.nupkg.sha512",
     "/home/kodit-pc-1/.nuget/packages/microsoft.aspnetcore.jsonpatch/6.0.10/microsoft.aspnetcore.jsonpatch.6.0.10.nupkg.sha512",
