@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using API.Extensions;
 using API.Middleware;
+using API.SignalR;
 
 namespace API
 {
@@ -25,6 +26,7 @@ namespace API
         {
             services.AddApplicationServices(_config);
             services.AddIdentityServices(_config);
+            services.AddSignalR();
 
             services
                 .AddControllers()
@@ -57,6 +59,8 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<PresenceHub>("hubs/presence");
+                endpoints.MapHub<MessageHub>("hubs/message");
             });
         }
     }
