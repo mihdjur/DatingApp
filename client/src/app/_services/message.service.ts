@@ -70,7 +70,7 @@ export class MessageService {
     return this.http.get<Message[]>(this.baseUrl + 'messages/thread/' + username);
   }
   async sendMessage(username : string, content: string) {
-   return this.hubConnection.invoke('SendMessage' , {recipientUsername : username, content})
+   return this.hubConnection.invoke('NewMessage' , {recipientUsername : username, content})
    .catch(error =>  console.log(error));
   }
 
